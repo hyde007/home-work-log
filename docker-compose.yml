@@ -1,0 +1,45 @@
+version: '3'
+services:
+  mysqldata: 
+    image: mysql:latest
+    volumes:
+      - db_data:/var/lib/mysql
+   # restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: hmlog
+      MYSQL_USER: hbstudent
+      MYSQL_PASSWORD: hbstudent
+  hmlnaming:
+    build:
+      dockerfile: Dockerfile.basic
+      context: ./hml-naming-server
+    ports:
+       - "8763:8763"
+  hml:
+    build:
+      dockerfile: Dockerfile.basic
+      context: ./hml
+    ports:
+       - "8080:8080"
+    depends_on:
+      - mysqldata
+      - hmlnaming
+  hmlron:
+    build:
+      dockerfile: Dockerfile.basic
+      context: ./hml-ronswanson-quotes
+    ports:
+      - "9000:9000"
+    depends_on:
+      - hmlnaming
+  zuulgateway:
+    build:
+      dockerfile: Dockerfile.basic
+      context: ./hml-zuul-api
+    ports:
+      - "8888:8888"
+    depends_on:
+      - hmlnaming
+volumes:
+    db_data: {}
