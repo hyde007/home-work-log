@@ -15,44 +15,6 @@
             "links" : ["zuulgateway"]
         },
         {
-            "name" : "mysqldata",
-            "image" : "mysql",
-            "hostname" : "mysqldata",
-            "essential" : true,
-            "memory" : 256,
-            "environment":[
-                {
-                    "name" : "MYSQL_ROOT_PASSWORD",
-                    "value" : "root"
-                },
-                {
-                    "name" : "MYSQL_DATABASE",
-                    "value" : "hmlog"
-                },
-                {
-                    "name" : "MYSQL_USER",
-                    "value" : "hbstudent"
-                },
-                {
-                    "name" : "MYSQL_PASSWORD",
-                    "value" : "hbstudent"
-                }
-            ],
-            "mountPoints" : [
-                {
-                    "sourceVolume" : "data",
-                    "containerPath" : "/var/lib/mysql"
-                }
-            ],
-            "portMappings": [
-                {
-                  "hostPort": 3306,
-                  "containerPort": 3306                
-                }
-            ],
-            "links" :["hml"]
-        },
-        {
             "name" : "hmlnaming",
             "image" : "hyde009/hml-naming-server",
             "hostname" : "hmlnaming",
@@ -100,7 +62,7 @@
                   "containerPort": 8888
                 }
             ],
-            "links" :["hml","hmlron"]
+            "links" :["hml","hmlron","hmlnaming"]
         }
     ]
 }
