@@ -3,6 +3,13 @@ sudo: required
 services:
   - docker
 
+cache:
+  directories:
+  - .autoconf
+  - $HOME/.m2    
+
+
+
 before_install:
   - cd hml
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
@@ -23,6 +30,7 @@ after_success:
   - docker build -t hyde009/hml-naming-server ./hml-naming-server
   - docker build -t hyde009/hml-ronswanson-quotes ./hml-ronswanson-quotes
   - docker build -t hyde009/hml-zuul-api ./hml-zuul-api
+  - docker build -t hyde009/nginx -f Dockerfile.basic ./nginx
   - echo "$DOCKER_PWD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push hyde009/hml
   - docker push hyde009/hml-naming-server
