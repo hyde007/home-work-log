@@ -1,0 +1,106 @@
+{
+    "AWSEBDockerrunVersion" : 2,
+    "containerDefinitions":[
+        {
+            "name" : "nginx",
+            "image" : "hyde009/nginx",
+            "hostname" : "nginx",
+            "essential" : false,
+            "portMappings": [
+                {
+                  "hostPort": 80,
+                  "containerPort": 80
+                }
+            ],
+            "links" : ["zuulgateway"]
+        },
+        {
+            "name" : "mysqldata",
+            "image" : "mysql",
+            "hostname" : "mysqldata",
+            "essential" : true,
+            "memory" : 256,
+            "environment":[
+                {
+                    "name" : "MYSQL_ROOT_PASSWORD",
+                    "value" : "root"
+                },
+                {
+                    "name" : "MYSQL_DATABASE",
+                    "value" : "hmlog"
+                },
+                {
+                    "name" : "MYSQL_USER",
+                    "value" : "hbstudent"
+                },
+                {
+                    "name" : "MYSQL_PASSWORD",
+                    "value" : "hbstudent"
+                }
+            ],
+            "mountPoints" : [
+                {
+                    "sourceVolume" : "data",
+                    "containerPath" : "/var/lib/mysql"
+                }
+            ],
+            "portMappings": [
+                {
+                  "hostPort": 3306,
+                  "containerPort": 3306                
+                }
+            ],
+            "links" :["hml"]
+        },
+        {
+            "name" : "hmlnaming",
+            "image" : "hyde009/hml-naming-server",
+            "hostname" : "hmlnaming",
+            "essential" : false,
+            "links" :["hml","hmlron"],
+            "portMappings": [
+                {
+                  "hostPort": 8763,
+                  "containerPort": 8763
+                }
+            ]
+        },
+        {
+            "name" : "hml",
+            "image" : "hyde009/hml",
+            "hostname" : "hml",
+            "essential" : false,
+            "portMappings": [
+                {
+                  "hostPort": 8080,
+                  "containerPort": 8080                
+                }
+            ]            
+        },
+        {
+            "name" : "hmlron",
+            "image" : "hyde009/hml-ronswanson-quotes",
+            "hostname" : "hmlron",
+            "essential" : false,
+            "portMappings": [
+                {
+                  "hostPort": 9000,
+                  "containerPort": 9000
+                }
+            ]
+        },
+        {
+            "name" : "zuulgateway",
+            "image" : "hyde009/hml-zuul-api",
+            "hostname" : "zuulgateway",
+            "essential" : false,
+            "portMappings": [
+                {
+                  "hostPort": 8888,
+                  "containerPort": 8888
+                }
+            ],
+            "links" :["hml","hmlron"]
+        }
+    ]
+}
