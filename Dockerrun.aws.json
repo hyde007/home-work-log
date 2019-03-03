@@ -5,14 +5,14 @@
             "name" : "nginx",
             "image" : "hyde009/nginx",
             "hostname" : "nginx",
-            "essential" : false,
+            "essential" : true,
             "portMappings": [
                 {
                   "hostPort": 80,
                   "containerPort": 80
                 }
             ],
-            "links" : ["zuulgateway"]
+            "links" : ["zuulgateway"]            
         },
         {
             "name" : "hmlnaming",
