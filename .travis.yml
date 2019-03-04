@@ -41,8 +41,8 @@ after_success:
 deploy:
   provider: elasticbeanstalk
   region: "us-west-2"
-  app: "HML2"
-  env: "Hml2-env"
+  app: "HML3"
+  env: "Hml3-env"
   bucket_name: "elasticbeanstalk-us-west-2-671213784911"
   bucket_path: "HML"
   on:
