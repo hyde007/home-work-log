@@ -13,20 +13,21 @@
                 }
             ],
             "links" : ["zuulgateway"],
-            "memory" : 256
+            "memory" : 256            
+        },
         {
             "name" : "hmlnaming",
             "image" : "hyde009/hml-naming-server",
             "hostname" : "hmlnaming",
             "essential" : false,
-            "links" :["hml","hmlron"],
             "portMappings": [
                 {
                   "hostPort": 8763,
                   "containerPort": 8763
                 }
             ],
-            "memory" : 256       
+            "memory" : 256,
+            "links" :["hmlron","hml","zuulgateway"]
         },
         {
             "name" : "hml",
@@ -39,7 +40,8 @@
                   "containerPort": 8080                
                 }
             ],
-            "memory" : 256                   
+            "memory" : 256,
+            "links" :["hmlnaming","zuulgateway"]
         },
         {
             "name" : "hmlron",
@@ -52,7 +54,8 @@
                   "containerPort": 9000
                 }
             ],
-            "memory" : 256       
+            "memory" : 256,
+            "links" :["hmlnaming","zuulgateway"]
         },
         {
             "name" : "zuulgateway",
