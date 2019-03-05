@@ -40,7 +40,7 @@
                 }
             ],
             "memory" : 256,
-			"links" :["hmlnaming","hmlron"]
+			"links" :["hmlnaming","hmlron","hml"]
         },
 		{
             "name" : "hmlron",
@@ -51,6 +51,20 @@
                 {
                   "hostPort": 9000,
                   "containerPort": 9000
+                }
+            ],
+            "memory" : 256,
+			"links":["hmlnaming"]
+        },
+        {
+            "name" : "hml",
+            "image" : "hyde009/hml",
+            "hostname" : "hml",
+            "essential" : false,
+            "portMappings": [
+                {
+                  "hostPort": 8080,
+                  "containerPort": 8080
                 }
             ],
             "memory" : 256,
