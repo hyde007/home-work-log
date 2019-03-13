@@ -38,17 +38,5 @@ after_success:
   - docker push hyde009/hml-zuul-api      
   - docker push hyde009/nginx
 
-deploy:
-  provider: elasticbeanstalk
-  region: "us-west-2"
-  app: "HML3"
-  env: "Hml3-env"
-  bucket_name: "elasticbeanstalk-us-west-2-671213784911"
-  bucket_path: "HML"
-  on:
-    branch: multiplecontainer
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key:
-    secure: "$AWS_SECRET_KEY"
 
   
