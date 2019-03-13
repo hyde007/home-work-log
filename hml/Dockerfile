@@ -1,5 +1,5 @@
 FROM openjdk:8-jdk-alpine
-EXPOSE 9000
+EXPOSE 9001
 VOLUME /tmp
 COPY target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]

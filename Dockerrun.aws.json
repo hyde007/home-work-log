@@ -1,0 +1,74 @@
+{
+    "AWSEBDockerrunVersion" : 2,
+    "containerDefinitions":[
+        {
+            "name" : "nginx",
+            "image" : "hyde009/nginx",
+            "hostname" : "nginx",
+            "essential" : true,
+            "portMappings": [
+                {
+                  "hostPort": 80,
+                  "containerPort": 80
+                }
+            ],
+            "links" : ["zuulgateway","hmlnaming"],
+            "memory" : 256            
+        },
+        {
+            "name" : "hmlnaming",
+            "image" : "hyde009/hml-naming-server",
+            "hostname" : "hmlnaming",
+            "essential" : false,
+            "portMappings": [
+                {
+                  "hostPort": 8763,
+                  "containerPort": 8763
+                }
+            ],
+            "memory" : 256
+		},
+        {
+            "name" : "zuulgateway",
+            "image" : "hyde009/hml-zuul-api",
+            "hostname" : "zuulgateway",
+            "essential" : false,
+            "portMappings": [
+                {
+                  "hostPort": 8888,
+                  "containerPort": 8888
+                }
+            ],
+            "memory" : 256,
+			"links" :["hmlnaming","hmlron","hml"]
+        },
+		{
+            "name" : "hmlron",
+            "image" : "hyde009/hml-ronswanson-quotes",
+            "hostname" : "hmlron",
+            "essential" : false,
+            "portMappings": [
+                {
+                  "hostPort": 9000,
+                  "containerPort": 9000
+                }
+            ],
+            "memory" : 256,
+			"links":["hmlnaming"]
+        },
+        {
+            "name" : "hml",
+            "image" : "hyde009/hml",
+            "hostname" : "hml",
+            "essential" : false,
+            "portMappings": [
+                {
+                  "hostPort": 9001,
+                  "containerPort": 9001
+                }
+            ],
+            "memory" : 256,
+			"links":["hmlnaming"]
+		}
+    ]
+}
